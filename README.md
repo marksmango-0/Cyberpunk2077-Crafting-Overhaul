@@ -23,7 +23,11 @@ Current notes, TODO, issues:
 * Jewelry can be disassembled. Also just an oversight at the moment, but with their value (especially once my pricing rebalance is done), it probably isn't worth breaking them down into parts. 
 * Hardware and mech parts are always awarded at the moment. I want to put some RNG on weapon disassembly to give more or less of them. Junk will always break down into exact parts.
 * Hardware, mech/electrical parts, and maybe intermediate components will be sold at some vendors. Not hard to do, I just need to do it.
-* Junk, etc. added by other mods won't have controlled disassembly. They will still produce intermediate parts, but until this is a bit more of a proper framework, those will need to likely be handled on my end unless the other mod developer removes those itemactions or adds the proper tagging. 
+* Junk, etc. added by other mods won't have controlled disassembly. They will still produce intermediate parts, but until this is a bit more of a proper framework, those will need to likely be handled on my end unless the other mod developer removes those itemactions or adds the proper tagging.
+* Item icons are stolen from vanilla. Intermediate components use the regular component icons (which is fine for now, since real components don't appear loose in the inventory), and mechanical, electrical, and hardware are unused icons left from pre-2.0. These will be updated eventually, but I'm not an artist. Hoping I can get the right AI prompts to generate them.
+* Localization only exists in English right now. I'll get the raw localization up at some point for community editing, but if you know how to open the archive in WK and can provide a localized .json for any other language, feel free to send it my way.
+
+* This is a very early beta release. I'm very open to feedback, and feel free to report issues here or ping me on discord @_jackthestripper. It likely won't see a nexus release for a few weeks, as I'm in the middle of moving cross-country and don't want to do a full release until I'm settled enoughtto dedicate time to it. 
 
 
 
