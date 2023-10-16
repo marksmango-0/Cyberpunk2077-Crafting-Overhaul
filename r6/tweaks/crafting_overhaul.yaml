@@ -1,0 +1,758 @@
+
+
+
+
+
+Crafting.DisassemblingResult_Default_inline0.ingredient: Items.IntermediateCrafting_Common
+#this works, but won't be used if everything is handled properly
+
+#5 intermediate parts + hardware + mech/electronic 
+#for a real crafting part
+#5 parts still upgrades to the next tier as usual
+Crafting.DisassemblingResult_Mechanical_inline0:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.IntermediateCrafting_Mechanical
+ amount: 2
+ 
+Crafting.DisassemblingResult_Mechanical_inline1:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.IntermediateCrafting_Hardware
+ amount: 2
+
+Crafting.DisassemblingResult_Mechanical:
+  $base: Crafting.DisassemblingResult_Default 
+  ingredients: [ Crafting.DisassemblingResult_Mechanical_inline0, Crafting.DisassemblingResult_Mechanical_inline1 ]
+  
+Crafting.DisassemblingResult_Electronic_inline0:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.IntermediateCrafting_Electronic
+ amount: 2
+ 
+Crafting.DisassemblingResult_Electronic_inline1:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.IntermediateCrafting_Hardware
+ amount: 2
+
+Crafting.DisassemblingResult_Electronic:
+  $base: Crafting.DisassemblingResult_Default 
+  ingredients: [ Crafting.DisassemblingResult_Electronic_inline0, Crafting.DisassemblingResult_Electronic_inline1 ]
+  
+Crafting.DisassemblingResult_Hardware_inline0:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.IntermediateCrafting_Hardware
+ amount: 2
+
+Crafting.DisassemblingResult_Hardware:
+  $base: Crafting.DisassemblingResult_Default 
+  ingredients: [ Crafting.DisassemblingResult_Hardware_inline0 ]
+ 
+ 
+#bundle crafting
+#needs to be done this way so we can have intermediate crafting as well as the 5-> 1 upgrade
+Crafting.UncommonComponentBundle:
+  $base: Crafting.DisassemblingResult_Default 
+  ingredients: [ Crafting.UncommonComponentBundle_inline0 ]
+
+Crafting.UncommonComponentBundle_inline0:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.CommonMaterial1
+ amount: 25
+
+Crafting.RareComponentBundle:
+  $base: Crafting.DisassemblingResult_Default 
+  ingredients: [ Crafting.RareComponentBundle_inline0 ]
+
+Crafting.RareComponentBundle_inline0:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.UncommonMaterial1
+ amount: 25
+
+Crafting.EpicComponentBundle:
+  $base: Crafting.DisassemblingResult_Default 
+  ingredients: [ Crafting.EpicComponentBundle_inline0 ]
+
+Crafting.EpicComponentBundle_inline0:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.RareMaterial1
+ amount: 25
+
+Crafting.LegendaryComponentBundle:
+  $base: Crafting.DisassemblingResult_Default 
+  ingredients: [ Crafting.LegendaryComponentBundle_inline0 ]
+
+Crafting.LegendaryComponentBundle_inline0:
+ $base: Crafting.DisassemblingResult_Default_inline0
+ ingredient: Items.EpicMaterial1
+ amount: 25
+
+
+#this doesn't do what I thought it did
+#still looking for a way to add a recipe as default through tweakDB
+# Craftbooks.playerCanCraft.craftableItem:
+ # - !append Items.IntermediateCrafting_Uncommon_Bundle
+ # - !append Items.IntermediateCrafting_Rare_Bundle
+ # - !append Items.IntermediateCrafting_Epic_Bundle
+ # - !append Items.IntermediateCrafting_Legendary_Bundle
+ # - !append Items.CommonMaterial1
+
+# Craftbooks.allRecipesCraftbook.craftableItem:
+ # - !append Items.IntermediateCrafting_Uncommon_Bundle
+ # - !append Items.IntermediateCrafting_Rare_Bundle
+ # - !append Items.IntermediateCrafting_Epic_Bundle
+ # - !append Items.IntermediateCrafting_Legendary_Bundle
+ # - !append Items.CommonMaterial1
+
+# Craftbooks.playerCanCraft_Ep1_standalone.craftableItem:
+ # - !append Items.IntermediateCrafting_Uncommon_Bundle
+ # - !append Items.IntermediateCrafting_Rare_Bundle
+ # - !append Items.IntermediateCrafting_Epic_Bundle
+ # - !append Items.IntermediateCrafting_Legendary_Bundle
+ # - !append Items.CommonMaterial1
+
+#these are just testing
+Vendors.wat_lch_gunsmith_01: &AddToVendor
+  itemStock:
+    - !append
+      item: Items.RecipeCommonCraftingMaterial
+      quantity: [ Vendors.IsPresent ]
+Vendors.Vendors.cct_cpz_medic_01: *AddToVendor
+
+
+   
+   
+
+
+#Common
+#add intermediate parts
+Items.CommonMaterial1_inline1:
+  $base: Items.UncommonMaterial1_inline1
+  amount: 5
+  ingredient: Items.IntermediateCrafting_Common
+#add mech parts as a requirement 
+Items.CommonMaterial1_inline2:
+  $base: Items.UncommonMaterial1_inline1
+  amount: 1
+  ingredient: Items.IntermediateCrafting_Mechanical
+#create inline
+Items.CommonMaterial1_inline0:
+  $base: Items.UncommonMaterial1_inline0
+  craftingRecipe: [Items.CommonMaterial1_inline1, Items.CommonMaterial1_inline2]
+
+Items.CommonMaterial1:
+  CraftingData: 
+    $type: CraftingPackage_Record
+    craftingExpModifier: 1
+    overcraftPenaltyModifier: 1
+    craftingRecipe:
+      - $type: RecipeElement_Record
+        amount: 1
+        ingredient: Items.IntermediateCrafting_Common
+      - $type: RecipeElement_Record
+        amount: 1
+        ingredient: Items.IntermediateCrafting_Mechanical
+        
+Items.RecipeCommonCraftingMaterial:
+  $base: Items.RecipeUncommonCraftingMaterial
+  iconPath: material_common
+  craftingResult:
+    $type: CraftingResult_Record
+    amount: 1
+    item: Items.CommonMaterial1
+  buyPrice:
+    - Price.OneEurodollar
+
+Price.OneEurodollar:
+  $base: Price.PriceMultiplier
+  value: 1    
+
+
+Items.UncommonMaterial1_inline1.ingredient: Items.IntermediateCrafting_Uncommon
+#add mech parts as a requirement 
+Items.UncommonMaterial1_inline2:
+  $base: Items.UncommonMaterial1_inline1
+  amount: 1
+  ingredient: Items.IntermediateCrafting_Mechanical
+#add new requirements to existing T2 crafting part recipe
+Items.UncommonMaterial1_inline0.craftingRecipe:
+  - !append Items.UncommonMaterial1_inline2 
+
+#Rare
+#replace existing T3 recipe with intermediate parts
+Items.RareMaterial1_inline1.ingredient: Items.IntermediateCrafting_Rare
+#add mech parts as a requirement 
+Items.RareMaterial1_inline2:
+  $base: Items.RareMaterial1_inline1
+  amount: 1
+  ingredient: Items.IntermediateCrafting_Mechanical
+#add new requirements to existing T2 crafting part recipe
+Items.RareMaterial1_inline0.craftingRecipe:
+  - !append Items.RareMaterial1_inline2 
+
+
+#Epic
+#replace existing T4 recipe with intermediate parts
+Items.EpicMaterial1_inline1.ingredient: Items.IntermediateCrafting_Epic
+#add mech parts as a requirement 
+Items.EpicMaterial1_inline2:
+  $base: Items.EpicMaterial1_inline1
+  amount: 1
+  ingredient: Items.IntermediateCrafting_Mechanical
+#add new requirements to existing T2 crafting part recipe
+Items.EpicMaterial1_inline0.craftingRecipe:
+  - !append Items.EpicMaterial1_inline2 
+
+
+#Legendary
+#replace existing T4 recipe with intermediate parts
+Items.LegendaryMaterial1_inline1.ingredient: Items.IntermediateCrafting_Legendary
+#add mech parts as a requirement 
+Items.LegendaryMaterial1_inline2:
+  $base: Items.LegendaryMaterial1_inline1
+  amount: 1
+  ingredient: Items.IntermediateCrafting_Mechanical
+
+#add new requirements to existing T2 crafting part recipe
+Items.LegendaryMaterial1_inline0.craftingRecipe:
+  - !append Items.LegendaryMaterial1_inline2 
+  
+
+
+
+#new Items
+
+Items.IntermediateCrafting_Common:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_common
+  quality: Quality.Common
+  displayName: LocKey#Intermediate-Crafting-Common-Name
+  localizedName: LocKey#Intermediate-Crafting-Common-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Common-Description
+  iconPath: material_common
+  tags: 
+   - !append n"CraftingPart"
+  objectActions:
+   - !remove ItemAction.Disassemble
+   - !remove ItemAction.JunkDisassemble
+   
+   
+Items.IntermediateCrafting_Uncommon:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_uncommon
+  quality: Quality.Uncommon
+  displayName: LocKey#Intermediate-Crafting-Uncommon-Name
+  localizedName: LocKey#Intermediate-Crafting-Uncommon-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Uncommon-Description
+  iconPath: material_uncommon
+  tags: 
+   - !append n"CraftingPart"
+  objectActions:
+   - !remove ItemAction.Disassemble
+   - !remove ItemAction.JunkDisassemble
+
+Items.IntermediateCrafting_Rare:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_rare
+  quality: Quality.Rare
+  displayName: LocKey#Intermediate-Crafting-Rare-Name
+  localizedName: LocKey#Intermediate-Crafting-Rare-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Rare-Description
+  iconPath: material_rare
+  tags: 
+   - !append n"CraftingPart"
+  objectActions:
+   - !remove ItemAction.Disassemble
+   - !remove ItemAction.JunkDisassemble
+   
+Items.IntermediateCrafting_Epic:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_epic
+  quality: Quality.Epic
+  displayName: LocKey#Intermediate-Crafting-Epic-Name
+  localizedName: LocKey#Intermediate-Crafting-Epic-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Epic-Description
+  iconPath: material_epic
+  tags: 
+   - !append n"CraftingPart"
+  objectActions:
+   - !remove ItemAction.Disassemble
+   - !remove ItemAction.JunkDisassemble
+   
+Items.IntermediateCrafting_Legendary:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_legendary
+  quality: Quality.Legendary
+  displayName: LocKey#Intermediate-Crafting-Legendary-Name
+  localizedName: LocKey#Intermediate-Crafting-Legendary-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Legendary-Description
+  iconPath: material_legendary
+  tags: 
+   - !append n"CraftingPart"
+  objectActions:
+   - !remove ItemAction.Disassemble
+   - !remove ItemAction.JunkDisassemble
+   
+#bundled usable components (disassemble for parts)
+#these are a workaround because one item can't have two recipes
+
+Items.IntermediateCrafting_Uncommon_Bundle:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_uncommon_bundle
+  quality: Quality.Uncommon
+  displayName: LocKey#Intermediate-Crafting-Uncommon-Bundle-Name
+  localizedName: LocKey#Intermediate-Crafting-Uncommon-Bundle-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Uncommon-Bundle-Description
+  iconPath: material_uncommon
+  CraftingData: Crafting.UncommonComponentBundle
+  tags: [n"CraftingPart", n"UncommonComponentsBundle"]
+
+   
+Items.IntermediateCrafting_Rare_Bundle:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_rare_bundle
+  quality: Quality.Rare
+  displayName: LocKey#Intermediate-Crafting-Rare-Bundle-Name
+  localizedName: LocKey#Intermediate-Crafting-Rare-Bundle-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Rare-Bundle-Description
+  iconPath: material_rare
+  CraftingData: Crafting.RareComponentBundle
+  tags: [n"CraftingPart", n"RareComponentsBundle"]   
+   
+Items.IntermediateCrafting_Epic_Bundle:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_epic_bundle
+  quality: Quality.Epic
+  displayName: LocKey#Intermediate-Crafting-Epic-Bundle-Name
+  localizedName: LocKey#Intermediate-Crafting-Epic-Bundle-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Epic-Bundle-Description
+  CraftingData: Crafting.EpicComponentBundle
+  iconPath: material_epic
+  tags: [n"CraftingPart", n"EpicComponentsBundle"]  
+   
+Items.IntermediateCrafting_Legendary_Bundle:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_legendary_bundle
+  quality: Quality.Legendary
+  displayName: LocKey#Intermediate-Crafting-Legendary-Bundle-Name
+  localizedName: LocKey#Intermediate-Crafting-Legendary-Bundle-Name
+  localizedDescription: LocKey#Intermediate-Crafting-Legendary-Bundle-Description
+  CraftingData: Crafting.LegendaryComponentBundle
+  iconPath: material_legendary
+  tags: [n"CraftingPart", n"LegendaryComponentsBundle"]  
+   
+   
+   
+   
+   
+   
+Items.IntermediateCrafting_Mechanical:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_mechanical
+  displayName: Intermediate-Crafting-Mechanic-Name
+  localizedName: Intermediate-Crafting-Mechanic-Name
+  localizedDescription: "Mechanical intermediate components"
+  iconPath: material_epic2
+  tags: 
+   - !append n"CraftingPart"
+  objectActions:
+   - !remove ItemAction.Disassemble
+   - !remove ItemAction.JunkDisassemble
+   
+Items.IntermediateCrafting_Electronic:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_electronic
+  displayName: Intermediate-Crafting-Electronic-Name
+  localizedName: Intermediate-Crafting-Electronic-Name
+  localizedDescription: Intermediate-Crafting-Electronic-Description
+  iconPath: material_rare2
+  tags: 
+   - !append n"CraftingPart"
+  objectActions:
+   - !remove ItemAction.Disassemble
+   - !remove ItemAction.JunkDisassemble
+
+Items.IntermediateCrafting_Hardware:
+  $base: Items.GenericJunkItem1
+  entityName: intermediate_component_hardware
+  displayName: Intermediate-Crafting-Hardware-Name
+  localizedName: Intermediate-Crafting-Hardware-Name
+  localizedDescription: Intermediate-Crafting-Hardware-Description
+  iconPath: material_legendary2
+  tags: 
+   - !append n"CraftingPart"
+  objectActions:
+   - !remove ItemAction.Disassemble
+   - !remove ItemAction.JunkDisassemble
+
+
+
+
+
+
+
+
+#items that need special disassembly handling
+
+#broken metal fangs
+Items.AnimalsJunkItem1.tags: &disassembleMechanical
+ - !append n"MechanicalDisassembly"
+Items.AnimalsJunkItem1: &disassembleMechanicalRecipe
+  CraftingData: Crafting.DisassemblingResult_Mechanical
+
+#lighter
+Items.GenericGangJunkItem3.tags: *disassembleMechanical
+#Items.GenericGangJunkItem3.CraftingData: *disassembleMechanicalRecipe
+Items.GenericGangJunkItem3.CraftingData: Crafting.DisassemblingResult_Mechanical
+#stapler
+Items.GenericCorporationJunkItem2.tags: *disassembleMechanical
+#Items.GenericCorporationJunkItem2.CraftingData: *disassembleMechanicalRecipe
+Items.GenericCorporationJunkItem2.CraftingData: Crafting.DisassemblingResult_Mechanical
+#drip coffee maker
+Items.GenericCorporationJunkItem5.tags: *disassembleMechanical
+#Items.GenericCorporationJunkItem5.CraftingData: *disassembleMechanicalRecipe
+Items.GenericCorporationJunkItem5.CraftingData: Crafting.DisassemblingResult_Mechanical
+#handcuffs
+Items.ScavengersJunkItem2.tags: *disassembleMechanical
+#Items.ScavengersJunkItem2.CraftingData: *disassembleMechanicalRecipe
+Items.ScavengersJunkItem2.CraftingData: Crafting.DisassemblingResult_Mechanical
+#tire iron (not really but who cares)
+Items.WraithsJunkItem1.tags: *disassembleMechanical
+#Items.WraithsJunkItem1.CraftingData: *disassembleMechanicalRecipe
+Items.WraithsJunkItem1.CraftingData: Crafting.DisassemblingResult_Mechanical
+
+#subdermal LED
+Items.MaelstromJunkItem1.tags: &disassembleElectrical
+ - !append n"ElectronicDisassembly"
+#soldering iron
+Items.MaelstromJunkItem2.tags: *disassembleElectrical
+#broken eye implant
+Items.MaelstromJunkItem3.tags: *disassembleElectrical
+#digital compass
+Items.MilitechJunkItem3.tags: *disassembleElectrical
+#shortwave transmitter
+Items.SixthStreetJunkItem2.tags: *disassembleElectrical
+
+
+
+
+
+
+
+
+#Medical Items
+#===========
+#medical gauze
+Items.GenericJunkItem4: &noDisassembly
+ objectActions:
+ - !remove ItemAction.Disassemble
+ - !remove ItemAction.JunkDisassemble
+ 
+ #medical forceps
+Items.GenericJunkItem18: *noDisassembly
+ 
+  #surgical scissors
+Items.GenericJunkItem19: *noDisassembly
+ 
+#condom
+Items.GenericJunkItem28: *noDisassembly
+ 
+ #disinfectant
+Items.GenericPoorJunkItem1: *noDisassembly
+
+ #hygiene bag
+Items.GenericCorporationJunkItem3: *noDisassembly
+
+#condom
+Items.MoxiesJunkItem3: *noDisassembly
+
+
+ #Pawn
+ #==============
+ 
+#grappling gloves
+Items.AnimalsJunkItem2: *noDisassembly
+
+#jaguar patch
+Items.AnimalsJunkItem3: *noDisassembly
+
+ #record
+Items.GenericJunkItem1: *noDisassembly
+ 
+#record
+Items.GenericJunkItem2: *noDisassembly
+
+ #record
+Items.GenericJunkItem3: *noDisassembly
+
+#rosary
+Items.GenericJunkItem10: *noDisassembly
+
+#voodoo rosary
+Items.GenericJunkItem11: *noDisassembly
+
+#perfume
+Items.GenericJunkItem16: *noDisassembly 
+ 
+#perfume
+Items.GenericJunkItem17: *noDisassembly
+ 
+ #cufflinks
+Items.CasinoRichJunkItem1: *noDisassembly
+ 
+  #ncu signet ring
+Items.CasinoRichJunkItem2: *noDisassembly
+
+#abstract painting
+Items.GenericRichJunkItem2: *noDisassembly
+ 
+#cashmere
+Items.GenericRichJunkItem3: *noDisassembly
+ 
+#crystal decanter
+Items.GenericRichJunkItem5: *noDisassembly
+ 
+#golden chain
+Items.GenericGangJunkItem1: *noDisassembly
+
+#thigh holster
+Items.MilitechJunkItem1: *noDisassembly
+
+#military pocket knife
+Items.MilitechJunkItem2: *noDisassembly
+
+#NUSA map
+Items.NomadsJunkItem2: *noDisassembly
+
+#mess kit
+Items.NomadsJunkItem3: *noDisassembly
+ 
+#Protector
+Items.SexToyJunkItem5: *noDisassembly
+ 
+#Luv Compartment
+Items.SexToyJunkItem6: *noDisassembly
+ 
+#NUSA pin
+Items.SixthStreetJunkItem1: *noDisassembly
+ 
+#military canteen
+Items.SixthStreetJunkItem3: *noDisassembly
+ 
+#postcard
+Items.SouvenirJunkItem1: *noDisassembly
+ 
+#souvenir magnet
+Items.SouvenirJunkItem2: *noDisassembly
+ 
+#shell casing keychain
+Items.SouvenirJunkItem3: *noDisassembly
+
+#souvenir license plate
+Items.SouvenirJunkItem4: *noDisassembly
+
+#omamori
+Items.TygerClawsJunkItem1: *noDisassembly
+ 
+#calavera
+Items.ValentinosJunkItem2: *noDisassembly
+ 
+#decorative spoon
+Items.ValentinosJunkItem3: *noDisassembly
+
+#shard with loa symbols
+Items.VoodooBoysJunkItem1: *noDisassembly
+ 
+ 
+ 
+#jewelry (all pawn, but separated)
+#==============
+#this may not be necessary, "jewellery" is already tagged. 
+#may need to disable disassembling though
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#Smokes
+#==============
+#pack of cigarettes
+Items.GenericJunkItem23: *noDisassembly
+ 
+#pack of cigarettes
+Items.GenericJunkItem24: *noDisassembly
+ 
+#cigar
+Items.CasinoRichJunkItem3: *noDisassembly
+ 
+#pipe
+Items.GenericJunkItem22: *noDisassembly
+ 
+ #Candy
+ #==================
+ #bubble gum
+Items.GenericJunkItem29: *noDisassembly
+ 
+#bubble gum
+Items.GenericJunkItem30: *noDisassembly
+
+ 
+ #Toys for children
+ #==============
+ #cards
+Items.CasinoJunkItem3: *noDisassembly
+
+#cards
+Items.GenericJunkItem20: *noDisassembly
+ 
+#cards
+Items.GenericJunkItem21: *noDisassembly
+ 
+ #cube
+Items.GenericJunkItem25: *noDisassembly
+ 
+ #stress ball
+Items.GenericCorporationJunkItem1: *noDisassembly
+
+#hand fan
+Items.GenericJunkItem8: *noDisassembly
+ 
+#hand fan
+Items.GenericJunkItem9: *noDisassembly
+
+#glow stick
+Items.GenericPoorJunkItem3: *noDisassembly
+ 
+#hanafuda cards
+Items.TygerClawsJunkItem3: *noDisassembly
+
+
+ 
+#trash, or on hold for now
+#==============
+ 
+
+
+#dice
+Items.CasinoJunkItem1: *noDisassembly
+ 
+#joker
+Items.CasinoJunkItem2: *noDisassembly
+ 
+#damaged poker chip
+Items.CasinoPoorJunkItem1: *noDisassembly
+ 
+#drink umbrella
+Items.CasinoPoorJunkItem2: *noDisassembly
+ 
+ #ashtray
+Items.CasinoPoorJunkItem3: *noDisassembly
+
+ #NDA
+Items.GenericCorporationJunkItem4: *noDisassembly
+
+#tattoo needle
+Items.GenericGangJunkItem2: *noDisassembly
+ 
+#counterfeit documents
+Items.GenericGangJunkItem4: *noDisassembly
+ 
+#bloody knife
+Items.GenericGangJunkItem5: *noDisassembly
+ 
+ #guitar pick
+Items.GenericJunkItem5: *noDisassembly
+ 
+ #ritual bowl
+Items.GenericJunkItem6: *noDisassembly
+ 
+ #flare
+Items.GenericJunkItem7: *noDisassembly
+ 
+ #spray paint
+Items.GenericJunkItem12: *noDisassembly
+ 
+ #spray paint
+Items.GenericJunkItem13: *noDisassembly
+ 
+ #scratchoff
+Items.GenericJunkItem14: *noDisassembly
+ 
+ #hair wax
+Items.GenericJunkItem15: *noDisassembly
+ 
+  #candles
+Items.GenericJunkItem26: *noDisassembly
+ 
+  #incense
+Items.GenericJunkItem27: *noDisassembly
+ 
+ #old can
+Items.GenericPoorJunkItem2: *noDisassembly
+ 
+ #damaged clothes
+Items.GenericPoorJunkItem4: *noDisassembly
+ 
+ #spray paint
+Items.GenericPoorJunkItem5: *noDisassembly
+ 
+ #champagne bucket
+Items.GenericRichJunkItem1: *noDisassembly
+ 
+ #cheese knives
+Items.GenericRichJunkItem4: *noDisassembly
+ 
+ #fluorescent lipstick
+Items.MoxiesJunkItem1: *noDisassembly
+ 
+ #torn fishnets
+Items.MoxiesJunkItem2: *noDisassembly
+
+ #brake fluid
+Items.NomadsJunkItem1: *noDisassembly
+ 
+#dull scalpel
+Items.ScavengersJunkItem1: *noDisassembly
+ 
+#used airhypo
+Items.ScavengersJunkItem3: *noDisassembly
+ 
+#gag
+Items.SexToyJunkItem1: *noDisassembly
+ 
+#studded dildo
+Items.SexToyJunkItem2: *noDisassembly
+ 
+#pilomancer 3000
+Items.SexToyJunkItem3: *noDisassembly
+ 
+#trans-anal express
+Items.SexToyJunkItem4: *noDisassembly
+ 
+#chopsticks
+Items.TygerClawsJunkItem2: *noDisassembly
+ 
+#hair gel
+Items.ValentinosJunkItem1: *noDisassembly
+ 
+#luminescent chalk
+Items.VoodooBoysJunkItem2: *noDisassembly
+ 
+#candle
+Items.VoodooBoysJunkItem3: *noDisassembly
+ 
+#bloody bandage
+Items.WraithsJunkItem2: *noDisassembly
+ 
+#turquoise hair gel
+Items.WraithsJunkItem3: *noDisassembly
